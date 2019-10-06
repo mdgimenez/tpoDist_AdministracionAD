@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="C:/Users/Maru/Desktop/TPO_V13/Librerias/lib/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Maru/Desktop/TPO_V13/Librerias/lib/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Maru/Desktop/TPO_V13/Librerias/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Maru/Desktop/TPO_V13/Librerias/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Maru/Desktop/TPO_V13/Librerias/lib/ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Maru/Desktop/TPO_V13/Librerias/lib/hibernate3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Maru/Desktop/TPO_V13/Librerias/lib/hibernate-annotations.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Maru/Desktop/TPO_V13/Librerias/lib/hibernate-commons-annotations.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Maru/Desktop/TPO_V13/Librerias/lib/javassist-3.4.GA.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Maru/Desktop/TPO_V13/Librerias/lib/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Maru/Desktop/TPO_V13/Librerias/lib/jta-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Maru/Desktop/TPO_V13/Librerias/lib/jtds-1.2.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Maru/Desktop/TPO_V13/Librerias/lib/slf4j-api-1.5.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Maru/Desktop/TPO_V13/Librerias/lib/slf4j-simple-1.5.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Maru/Desktop/TPO_V13/Librerias/lib/sqljdbc4.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
