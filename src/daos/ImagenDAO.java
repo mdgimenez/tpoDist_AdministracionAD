@@ -7,7 +7,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import entities.ImagenEntity;
+import entities.ReclamoEntity;
 import exceptions.ImagenException;
+import exceptions.ReclamoException;
 import hibernate.HibernateUtil;
 import modelo.Edificio;
 import modelo.Imagen;
@@ -26,13 +28,26 @@ public class ImagenDAO {
 		return instancia;
 	}
 	
+	public int obtenerUltimoId() throws ImagenException {
+		SessionFactory sf = HibernateUtil.getSessionFactory();
+		Session s = sf.getCurrentSession();
+		int id = (Integer) s.createQuery("select max(numero) from ReclamoEntity")
+			.uniqueResult();
+		s.beginTransaction();
+		if(id != 0)
+			return id;
+		else
+			throw new ImagenException("No se pudo recuperar el ultimo id");
+		
+	}
+	
 	public List<Imagen> getImagenes(int idReclamo) throws ImagenException {
 		try {
 			List<Imagen> resultado = new ArrayList<Imagen>();
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.getCurrentSession();
 			s.beginTransaction();
-			List<ImagenEntity> imagenes = s.createQuery("from ImagenEntity i where i.idReclamo = ?").setInteger(0, idReclamo).list();
+			List<ImagenEntity> imagenes = s.createQuery("from ImagenEntity i where i.reclamo = ?").setInteger(0, idReclamo).list();
 			for(ImagenEntity i : imagenes)
 				resultado.add(toNegocio(i));
 			s.getTransaction().commit();
@@ -44,21 +59,21 @@ public class ImagenDAO {
 	
 	Imagen toNegocio(ImagenEntity i) throws ImagenException {
 		if(i != null) {
-			Imagen imagen = new Imagen(i.getNumero(), i.getBinary(), i.toString(), i.getReclamo().getId());
+			Imagen imagen = new Imagen(i.getNumero(), i.getBinary(), i.getTipo(), i.getReclamo().getId());
 			return imagen;
 		}
 		else
 			throw new ImagenException("No se pudo recuperar las imagenes");
 	}
 
-	public void saveImagen(int idReclamo, List<Imagen> imagenes) throws ImagenException {
+	public void saveImagen(ReclamoEntity reclamo, List<Imagen> imagenes) throws ImagenException {
 		try {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.getCurrentSession();
 			s.beginTransaction();
 			ImagenEntity imagen = new ImagenEntity();
 			for(Imagen i : imagenes) {
-				imagen = new ImagenEntity(i.getBinary(), i.getTipo(), idReclamo);
+				imagen = new ImagenEntity(i.getBinary(), i.getTipo(), reclamo);
 				s.beginTransaction();
 				s.save(imagen);
 			}

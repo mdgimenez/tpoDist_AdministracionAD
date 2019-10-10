@@ -1,19 +1,23 @@
 package entities;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name="imagenes")
 public class ImagenEntity {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int numero;
 	
-	private String binary;
+	private byte[] binary;
 	private String tipo;
 
 	@ManyToOne
@@ -22,7 +26,8 @@ public class ImagenEntity {
 	
 	public ImagenEntity() {	}
 	
-	public ImagenEntity(String binary, String tipo, int idReclamo) {
+	public ImagenEntity(byte[] binary, String tipo, ReclamoEntity reclamo) {
+		this.reclamo = reclamo;
 		this.binary = binary;
 		this.tipo = tipo;
 	}
@@ -31,7 +36,7 @@ public class ImagenEntity {
 		return numero;
 	}
 	
-	public String getBinary() {
+	public byte[] getBinary() {
 		return binary;
 	}
 	
@@ -42,6 +47,5 @@ public class ImagenEntity {
 	public ReclamoEntity getReclamo() {
 		return reclamo;
 	}
-	
 	
 }

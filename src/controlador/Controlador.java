@@ -13,6 +13,7 @@ import daos.PersonaDAO;
 import daos.ReclamoDAO;
 import daos.UnidadDAO;
 import daos.UsuarioDAO;
+import entities.ReclamoEntity;
 import exceptions.EdificioException;
 import exceptions.ImagenException;
 import exceptions.PersonaException;
@@ -154,14 +155,15 @@ public class Controlador {
 	}
 	
 	/** TO DO */
-	public int registrarUsuario(UsuarioView uw) throws UsuarioException {
+	public void registrarUsuario(UsuarioView uw) throws UsuarioException {
 		try {
 			Usuario usuario = UsuarioDAO.getInstancia().getUsuarioByDocumento(uw.getDocumento());
 			if(usuario == null) {
 				Persona persona = buscarPersona(uw.getDocumento());
-				if(persona != null)
-					usuario = new Usuario(UsuarioDAO.getInstancia().obtenerUltimoId(), persona, uw.getContrasena());
-				return usuario.getId();
+				if(persona != null) {
+					usuario = new Usuario(UsuarioDAO.getInstancia().obtenerUltimoId()+1, persona, uw.getContrasena());
+					UsuarioDAO.getInstancia().saveUsuario(usuario);
+				}
 			} 
 			else {
 				throw new UsuarioException("Ya existe el Usuario");
@@ -188,9 +190,9 @@ public class Controlador {
 			if(rw.getIdUnidad() > 0)
 				unidad = UnidadDAO.getInstancia().findById(rw.getIdUnidad());
 			Reclamo reclamo = new Reclamo(ReclamoDAO.getInstancia().obtenerUltimoId()+1, persona, edificio, rw.getPiso(), rw.getUbicacion(), rw.getDescripcion(), unidad);
-			ReclamoDAO.getInstancia().saveReclamo(reclamo);
+			ReclamoEntity re = ReclamoDAO.getInstancia().saveReclamo(reclamo);
 			if(rw.getImagenes() != null)
-				ImagenDAO.getInstancia().saveImagen(reclamo.getId(), rw.getImagenes());
+				ImagenDAO.getInstancia().saveImagen(re, rw.getImagenes());
 			return reclamo.getId();
 		} catch(Exception e) {
 			throw new ReclamoException("No se pudo guardar el reclamo");

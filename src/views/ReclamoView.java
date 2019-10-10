@@ -15,6 +15,7 @@ public class ReclamoView {
 	private List<Imagen> imagenes;
 	private int idUnidad;
 	private String estado;
+	private String fecha;
 	
 	public ReclamoView() { }
 
@@ -28,6 +29,19 @@ public class ReclamoView {
 		this.imagenes = imagenes;
 		this.estado = estado;
 		this.idUnidad = idUnidad;
+	}
+	
+	public ReclamoView(int id, String documentoPersona, int codigoEdificio, String piso, String ubicacion, String descripcion, int idUnidad, String estado, List<Imagen> imagenes, String fecha) {
+		this.id = id;
+		this.documentoPersona = documentoPersona;
+		this.codigoEdificio = codigoEdificio;
+		this.piso = piso;
+		this.ubicacion = ubicacion;
+		this.descripcion = descripcion;
+		this.imagenes = imagenes;
+		this.estado = estado;
+		this.idUnidad = idUnidad;
+		this.fecha = fecha;
 	}
 
 	public int getId() {
@@ -66,4 +80,7 @@ public class ReclamoView {
 		return idUnidad;
 	}
 
+	public String getFecha() {
+		return fecha;
+	}
 }

@@ -10,6 +10,7 @@ import entities.InquilinoEntity;
 import entities.PersonaEntity;
 import entities.ReclamoEntity;
 import entities.UnidadEntity;
+import entities.UsuarioEntity;
 
 public class HibernateUtil
 {
@@ -26,6 +27,7 @@ public class HibernateUtil
         	 config.addAnnotatedClass(InquilinoEntity.class);
         	 config.addAnnotatedClass(ReclamoEntity.class);
         	 config.addAnnotatedClass(ImagenEntity.class);
+        	 config.addAnnotatedClass(UsuarioEntity.class);
              sessionFactory = config.buildSessionFactory();
         }
         catch (Throwable ex)

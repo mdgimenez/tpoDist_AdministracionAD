@@ -39,7 +39,7 @@ public class ReclamoDAO {
 		s.beginTransaction();
 		int id = (Integer) s.createQuery("select max(idReclamo) from ReclamoEntity")
 			.uniqueResult();
-		s.beginTransaction();
+		//s.beginTransaction();
 		if(id != 0)
 			return id;
 		else
@@ -47,7 +47,7 @@ public class ReclamoDAO {
 		
 	}
 	
-	public void saveReclamo(Reclamo r) throws ReclamoException, ImagenException {
+	public ReclamoEntity saveReclamo(Reclamo r) throws ReclamoException, ImagenException {
 		try {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.getCurrentSession();
@@ -73,6 +73,7 @@ public class ReclamoDAO {
 			s.beginTransaction();
 			s.save(re);
 			s.getTransaction().commit();
+			return re;
 			} catch (Exception e) {
 				throw new ReclamoException("No se pudo guardar el Reclamo");
 			}
@@ -144,9 +145,11 @@ public class ReclamoDAO {
 				Unidad unidad = null;
 				if(r.getUnidad() != null)
 					unidad = UnidadDAO.getInstancia().findById(r.getUnidad().getEdificio().getCodigo(), r.getUnidad().getPiso(), r.getUnidad().getNumero());
-				Reclamo reclamo = new Reclamo(r.getId(), persona, edificio, r.getPiso(), r.getUbicacion(), r.getDescripcion(), unidad);
+				Reclamo reclamo = new Reclamo(r.getId(), persona, edificio, r.getPiso(), r.getUbicacion(), r.getDescripcion(), unidad, r.getFecha());
 				reclamo.setEstado(r.getEstado());
-				//reclamo.setImagenes(ImagenDAO.getInstancia().getImagens(r.getId()));
+				List<Imagen> imagenes = ImagenDAO.getInstancia().getImagenes(r.getId());
+				if(imagenes.size() > 0)
+					reclamo.setImagenes(imagenes);
 				return reclamo;
 			}
 			else

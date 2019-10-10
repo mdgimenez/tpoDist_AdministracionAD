@@ -33,6 +33,7 @@ public class ReclamoEntity {
 	private String ubicacion;
 	private String descripcion;
 	private String estado;
+	private String fecha;
 	
 	@OneToOne
 	@JoinColumn(name="identificador")
@@ -53,6 +54,18 @@ public class ReclamoEntity {
 		this.imagenes = imagenes;
 		this.estado = estado;
 		this.unidad = unidad;
+	}
+	
+	public ReclamoEntity(PersonaEntity persona, EdificioEntity edificio, String piso, String ubicacion, String descripcion, List<ImagenEntity> imagenes, String estado, UnidadEntity unidad, String fecha) {
+		this.persona = persona;
+		this.edificio = edificio;
+		this.piso = piso;
+		this.ubicacion = ubicacion;
+		this.descripcion = descripcion;
+		this.imagenes = imagenes;
+		this.estado = estado;
+		this.unidad = unidad;
+		this.fecha = fecha;
 	}
 	
 	public int getId() {
@@ -89,5 +102,9 @@ public class ReclamoEntity {
 
 	public UnidadEntity getUnidad() {
 		return unidad;
+	}
+	
+	public String getFecha() {
+		return fecha;
 	}
 }

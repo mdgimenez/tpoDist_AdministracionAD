@@ -25,8 +25,7 @@ public class UsuarioDAO {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session s = sf.getCurrentSession();
 		s.beginTransaction();
-		int id = (Integer) s.createQuery("select max(idUser) from UsuarioEntity")
-				.uniqueResult();
+		int id = (Integer) s.createQuery("select max(idUser) from UsuarioEntity").uniqueResult();
 		if(id != 0)
 			return id;
 		else
