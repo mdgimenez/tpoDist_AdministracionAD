@@ -155,7 +155,7 @@ public class Controlador {
 	}
 	
 	/** TO DO */
-	public void registrarUsuario(UsuarioView uw) throws UsuarioException {
+	public int registrarUsuario(UsuarioView uw) throws UsuarioException {
 		try {
 			Usuario usuario = UsuarioDAO.getInstancia().getUsuarioByDocumento(uw.getDocumento());
 			if(usuario == null) {
@@ -163,14 +163,16 @@ public class Controlador {
 				if(persona != null) {
 					usuario = new Usuario(UsuarioDAO.getInstancia().obtenerUltimoId()+1, persona, uw.getContrasena());
 					UsuarioDAO.getInstancia().saveUsuario(usuario);
+					return usuario.getId();
 				}
-			} 
+			}
 			else {
 				throw new UsuarioException("Ya existe el Usuario");
 			}
 		} catch (Exception e) {
 			throw new UsuarioException("No se pudo registrar el Usuario");
 		}
+		return -1;
 	}
 	
 	public boolean autenticarUsuario(UsuarioView uw) throws UsuarioException {

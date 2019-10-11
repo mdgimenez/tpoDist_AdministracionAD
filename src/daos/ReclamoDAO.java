@@ -147,9 +147,9 @@ public class ReclamoDAO {
 					unidad = UnidadDAO.getInstancia().findById(r.getUnidad().getEdificio().getCodigo(), r.getUnidad().getPiso(), r.getUnidad().getNumero());
 				Reclamo reclamo = new Reclamo(r.getId(), persona, edificio, r.getPiso(), r.getUbicacion(), r.getDescripcion(), unidad, r.getFecha());
 				reclamo.setEstado(r.getEstado());
-				List<Imagen> imagenes = ImagenDAO.getInstancia().getImagenes(r.getId());
-				if(imagenes.size() > 0)
-					reclamo.setImagenes(imagenes);
+				//List<Imagen> imagenes = ImagenDAO.getInstancia().getImagenes(r.getId());
+				//if(imagenes.size() > 0)
+				//	reclamo.setImagenes(imagenes);
 				return reclamo;
 			}
 			else
