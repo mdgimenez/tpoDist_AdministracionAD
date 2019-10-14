@@ -91,14 +91,14 @@ public class ReclamoDAO {
 		return resultado;
 	}
 	
-	public Reclamo findById(int codigo) throws ReclamoException, ImagenException {
+	public Reclamo findByID(int codigo) throws ReclamoException, ImagenException {
 		Reclamo resultado = null;
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session s = sf.getCurrentSession();
 		s.beginTransaction();
 		ReclamoEntity reclamo = (ReclamoEntity) s.createQuery("from ReclamoEntity r where r.idReclamo = ?").setInteger(0, codigo).uniqueResult();
 		if(reclamo != null)
-			resultado = toNegocio(reclamo);
+			resultado = toVista(reclamo);
 		return resultado;
 	}
 	
@@ -150,6 +150,28 @@ public class ReclamoDAO {
 				//List<Imagen> imagenes = ImagenDAO.getInstancia().getImagenes(r.getId());
 				//if(imagenes.size() > 0)
 				//	reclamo.setImagenes(imagenes);
+				return reclamo;
+			}
+			else
+				throw new ReclamoException("No se pudo realizar la recuperación");
+		} catch (Exception e) {
+			throw new ReclamoException("No se pudo realizar la recuperación");
+		}
+	}
+	
+	Reclamo toVista(ReclamoEntity r) throws ReclamoException, ImagenException {
+		try {
+			if(r != null) {
+				Persona persona = PersonaDAO.getInstancia().findByID(r.getPersona().getDocumento());
+				Edificio edificio = EdificioDAO.getInstancia().findByID(r.getEdificio().getCodigo());
+				Unidad unidad = null;
+				if(r.getUnidad() != null)
+					unidad = UnidadDAO.getInstancia().findById(r.getUnidad().getEdificio().getCodigo(), r.getUnidad().getPiso(), r.getUnidad().getNumero());
+				Reclamo reclamo = new Reclamo(r.getId(), persona, edificio, r.getPiso(), r.getUbicacion(), r.getDescripcion(), unidad, r.getFecha());
+				reclamo.setEstado(r.getEstado());
+				List<Imagen> imagenes = ImagenDAO.getInstancia().getImagenes(r.getId());
+				if(imagenes.size() > 0)
+					reclamo.setImagenes(imagenes);
 				return reclamo;
 			}
 			else

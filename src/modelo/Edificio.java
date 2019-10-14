@@ -112,5 +112,4 @@ public class Edificio {
 		return new EdificioView(codigo, nombre, direccion);
 	}
 
-
 }

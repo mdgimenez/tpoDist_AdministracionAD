@@ -236,14 +236,25 @@ public class Controlador {
 
 	/** OK */
 	public ReclamoView buscarReclamo(int id) throws ReclamoException, ImagenException {
-		return ReclamoDAO.getInstancia().findById(id).toView();
+		return ReclamoDAO.getInstancia().findByID(id).toView();
+	}
+	
+	/** OK */
+	public EdificioView buscarEdificioReclamo(int codigo) throws EdificioException, UnidadException {
+		return EdificioDAO.getInstancia().findByID(codigo).toView();
+	}
+	
+	/** OK */
+	public PersonaView buscarPersonaReclamo(String documento) throws PersonaException {
+		return PersonaDAO.getInstancia().findByID(documento).toView();
 	}
 	
 	/** TO DO */
 	public void actualizarEstadoReclamo(int id, String estado) throws ReclamoException {
 		ReclamoDAO.getInstancia().updateReclamoEstado(id, estado);
 	}
-
+	
+	/** OK */
 	public List<ReclamoView> buscarReclamosAsociados(String documento) throws ReclamoException, ImagenException, PersonaException{
 		List<ReclamoView> resultado = new ArrayList<ReclamoView>();
 		List<Reclamo> reclamos = new ArrayList<Reclamo>();
@@ -266,6 +277,7 @@ public class Controlador {
 		return resultado;
 	}
 
+	/** OK */
 	public List<ReclamoView> buscarTodosLosReclamos() throws ReclamoException, ImagenException {
 		List<ReclamoView> resultado = new ArrayList<ReclamoView>();
 		List<Reclamo> reclamos = ReclamoDAO.getInstancia().getAll();
