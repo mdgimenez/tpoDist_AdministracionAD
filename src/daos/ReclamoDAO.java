@@ -6,11 +6,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import entities.EdificioEntity;
-import entities.ImagenEntity;
-import entities.PersonaEntity;
 import entities.ReclamoEntity;
-import entities.UnidadEntity;
 import exceptions.ImagenException;
 import exceptions.ReclamoException;
 import hibernate.HibernateUtil;
@@ -19,7 +15,6 @@ import modelo.Imagen;
 import modelo.Persona;
 import modelo.Reclamo;
 import modelo.Unidad;
-import views.ReclamoView;
 
 public class ReclamoDAO {
 
@@ -57,6 +52,7 @@ public class ReclamoDAO {
 					EdificioDAO.getInstancia().toEntity(r.getEdificio()), 
 					r.getPiso(), 
 					r.getUbicacion(),
+					r.getTitulo(),
 					r.getDescripcion(), 
 					null,	//Caso base de que no se tenga ninguna imagen 
 					r.getEstado(), 
@@ -66,6 +62,7 @@ public class ReclamoDAO {
 						EdificioDAO.getInstancia().toEntity(r.getEdificio()), 
 						r.getPiso(), 
 						r.getUbicacion(),
+						r.getTitulo(),
 						r.getDescripcion(), 
 						null,	//Caso base de que no se tenga ninguna imagen
 						r.getEstado(), 
@@ -84,6 +81,7 @@ public class ReclamoDAO {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session s = sf.getCurrentSession();
 		s.beginTransaction();
+		@SuppressWarnings("unchecked")
 		List<ReclamoEntity> reclamos = s.createQuery("from ReclamoEntity").list();
 		for(ReclamoEntity r : reclamos)
 			resultado.add(toNegocio(r));
@@ -118,6 +116,7 @@ public class ReclamoDAO {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session s = sf.getCurrentSession();
 		s.beginTransaction();
+		@SuppressWarnings("unchecked")
 		List<ReclamoEntity> reclamos = s.createQuery("from ReclamoEntity r where r.persona = ?").setString(0, documento).list();
 		for(ReclamoEntity r : reclamos)
 			resultado.add(toNegocio(r));
@@ -130,6 +129,7 @@ public class ReclamoDAO {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session s = sf.getCurrentSession();
 		s.beginTransaction();
+		@SuppressWarnings("unchecked")
 		List<ReclamoEntity> reclamos = s.createQuery("from ReclamoEntity r where r.edificio = ?").setInteger(0, edificio).list();
 		for(ReclamoEntity r : reclamos)
 			resultado.add(toNegocio(r));
@@ -145,7 +145,7 @@ public class ReclamoDAO {
 				Unidad unidad = null;
 				if(r.getUnidad() != null)
 					unidad = UnidadDAO.getInstancia().findById(r.getUnidad().getEdificio().getCodigo(), r.getUnidad().getPiso(), r.getUnidad().getNumero());
-				Reclamo reclamo = new Reclamo(r.getId(), persona, edificio, r.getPiso(), r.getUbicacion(), r.getDescripcion(), unidad, r.getFecha());
+				Reclamo reclamo = new Reclamo(r.getId(), persona, edificio, r.getPiso(), r.getUbicacion(), r.getTitulo(), r.getDescripcion(), unidad, r.getFecha());
 				reclamo.setEstado(r.getEstado());
 				//List<Imagen> imagenes = ImagenDAO.getInstancia().getImagenes(r.getId());
 				//if(imagenes.size() > 0)
@@ -167,7 +167,7 @@ public class ReclamoDAO {
 				Unidad unidad = null;
 				if(r.getUnidad() != null)
 					unidad = UnidadDAO.getInstancia().findById(r.getUnidad().getEdificio().getCodigo(), r.getUnidad().getPiso(), r.getUnidad().getNumero());
-				Reclamo reclamo = new Reclamo(r.getId(), persona, edificio, r.getPiso(), r.getUbicacion(), r.getDescripcion(), unidad, r.getFecha());
+				Reclamo reclamo = new Reclamo(r.getId(), persona, edificio, r.getPiso(), r.getUbicacion(), r.getTitulo(), r.getDescripcion(), unidad, r.getFecha());
 				reclamo.setEstado(r.getEstado());
 				List<Imagen> imagenes = ImagenDAO.getInstancia().getImagenes(r.getId());
 				if(imagenes.size() > 0)

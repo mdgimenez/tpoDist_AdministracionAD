@@ -30,6 +30,7 @@ public class DuenioDAO {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session s = sf.getCurrentSession();
 		s.beginTransaction();
+		@SuppressWarnings("unchecked")
 		List<DuenioEntity> duenios = (List<DuenioEntity>) s.createQuery("from DuenioEntity de where de.unidad.id = ?")
 					.setInteger(0, id)
 					.list();
@@ -50,6 +51,7 @@ public class DuenioDAO {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.getCurrentSession();
 			s.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<DuenioEntity> duenios = (List<DuenioEntity>) s.createQuery("from DuenioEntity d where d.persona = ?")
 						.setString(0, documento)
 						.list();

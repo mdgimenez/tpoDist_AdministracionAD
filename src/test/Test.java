@@ -1,8 +1,6 @@
 package test;
 
-import java.awt.Image;
 import java.awt.image.RenderedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -54,9 +52,18 @@ public class Test {
 		System.out.println("\nInquilinos por unidad " + iu.size());
 
 		List<ReclamoView> rv = Controlador.getInstancia().getReclamos();
-		System.out.println("\nCantidad de reclamos registrados " + rv.size());*/
+		System.out.println("\nCantidad de reclamos registrados " + rv.size());
 	
-		/*RenderedImage imagen;
+		int codigo = 6;
+		List<ReclamoView> rve = Controlador.getInstancia().getReclamosByEdificio(codigo);
+		System.out.println("\nCantidad de reclamos para el edificio n°" + codigo + ": " + rve);
+		
+		String documento = "DNI92920447";
+		List<ReclamoView> rvp = Controlador.getInstancia().getReclamosByDocumento(documento);
+		System.out.println("\nCantidad de reclamos con el documento " + documento + ": " + rvp.size());*/
+		
+		/** Ingresar imagen en la base de datos */
+		RenderedImage imagen;
 		File f = new File("B:\\Viaje a Brasil 2017\\IMG_20170115_105248624.jpg");
 		try {
 			imagen = ImageIO.read(f);
@@ -66,34 +73,21 @@ public class Test {
 			Imagen i = new Imagen(-1, bytes, "jpg", 16);
 			List<Imagen> imagenes = new ArrayList<Imagen>();
 			imagenes.add(i);
-			int id = Controlador.getInstancia().crearReclamo(new ReclamoView(-1,"CPA3449614", 1, "10", "Pasillo", "Mancha de humedad", 0, "Revision", imagenes));
+			int id = Controlador.getInstancia().crearReclamo(new ReclamoView(-1,"CPA3449614", 1, "10", "Pasillo", "Mancha de humedad", "Se genero una mancha de humedad en la pared del dormitorio", 0, "Pendiente", imagenes));
 			System.out.println("Id reclamo: " + id);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}*/
+		}
 		
-		/*Controlador.getInstancia().actualizarEstadoReclamo(13, "En progreso");
-		
-		System.out.println(Controlador.getInstancia().buscarReclamo(id).getEstado());
-		
-		List<ReclamoView> rv = Controlador.getInstancia().getReclamosByEdificio(6);*/
-		
-		/*List<ReclamoView> rv = Controlador.getInstancia().getReclamosByDocumento("DNI92920447");
-		System.out.println(rv.size());*/
-		
-		/*List<ReclamoView> rv = Controlador.getInstancia().getReclamos();*/
-		
-		try {
+		/*Controlador.getInstancia().actualizarEstadoReclamo(13, "En progreso");*/
+				
+		/** Ingresar un usario a la base de datos */
+		/*try {
 			Controlador.getInstancia().registrarUsuario(new UsuarioView(-1, "CPA3449614", "password"));
 		} catch (UsuarioException e) {
 			e.printStackTrace();
-		}
-		
-		/*List<ReclamoView> resultado = Controlador.getInstancia().buscarReclamosAsociados("DNI30012288");
-		for(ReclamoView rv: resultado)
-		{
-			System.out.println(rv.getId());
 		}*/
+	
 	}
 
 }

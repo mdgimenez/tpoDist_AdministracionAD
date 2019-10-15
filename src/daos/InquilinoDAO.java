@@ -29,6 +29,7 @@ public class InquilinoDAO {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session s = sf.getCurrentSession();
 		s.beginTransaction();
+		@SuppressWarnings("unchecked")
 		List<InquilinoEntity> inquilinos = (List<InquilinoEntity>) s.createQuery("from InquilinoEntity ie where ie.unidad.id = ?")
 					.setInteger(0, id)
 					.list();
@@ -49,6 +50,7 @@ public class InquilinoDAO {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.getCurrentSession();
 			s.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<InquilinoEntity> inquilinos = (List<InquilinoEntity>) s.createQuery("from InquilinoEntity d where d.persona = ?")
 						.setString(0, documento)
 						.list();

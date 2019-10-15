@@ -31,6 +31,7 @@ public class ReclamoEntity {
 	
 	private String piso;
 	private String ubicacion;
+	private String titulo;
 	private String descripcion;
 	private String estado;
 	private String fecha;
@@ -45,22 +46,24 @@ public class ReclamoEntity {
 	
 	public ReclamoEntity() { }
 	
-	public ReclamoEntity(PersonaEntity persona, EdificioEntity edificio, String piso, String ubicacion, String descripcion, List<ImagenEntity> imagenes, String estado, UnidadEntity unidad) {
+	public ReclamoEntity(PersonaEntity persona, EdificioEntity edificio, String piso, String ubicacion, String titulo, String descripcion, List<ImagenEntity> imagenes, String estado, UnidadEntity unidad) {
 		this.persona = persona;
 		this.edificio = edificio;
 		this.piso = piso;
 		this.ubicacion = ubicacion;
+		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.imagenes = imagenes;
 		this.estado = estado;
 		this.unidad = unidad;
 	}
 	
-	public ReclamoEntity(PersonaEntity persona, EdificioEntity edificio, String piso, String ubicacion, String descripcion, List<ImagenEntity> imagenes, String estado, UnidadEntity unidad, String fecha) {
+	public ReclamoEntity(PersonaEntity persona, EdificioEntity edificio, String piso, String ubicacion, String titulo, String descripcion, List<ImagenEntity> imagenes, String estado, UnidadEntity unidad, String fecha) {
 		this.persona = persona;
 		this.edificio = edificio;
 		this.piso = piso;
 		this.ubicacion = ubicacion;
+		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.imagenes = imagenes;
 		this.estado = estado;
@@ -106,5 +109,9 @@ public class ReclamoEntity {
 	
 	public String getFecha() {
 		return fecha;
+	}
+	
+	public String getTitulo() {
+		return titulo;
 	}
 }

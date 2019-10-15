@@ -28,6 +28,7 @@ public class PersonaDAO {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session s = sf.getCurrentSession();
 		s.beginTransaction();
+		@SuppressWarnings("unchecked")
 		List<PersonaEntity> personas = s.createQuery("from PersonaEntity").list();
 		for(PersonaEntity p : personas)
 			resultado.add(toNegocio(p));

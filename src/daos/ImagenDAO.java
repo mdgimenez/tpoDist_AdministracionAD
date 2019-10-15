@@ -9,12 +9,8 @@ import org.hibernate.SessionFactory;
 import entities.ImagenEntity;
 import entities.ReclamoEntity;
 import exceptions.ImagenException;
-import exceptions.ReclamoException;
 import hibernate.HibernateUtil;
-import modelo.Edificio;
 import modelo.Imagen;
-import modelo.Persona;
-import modelo.Reclamo;
 
 public class ImagenDAO {
 
@@ -47,6 +43,7 @@ public class ImagenDAO {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.getCurrentSession();
 			s.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<ImagenEntity> imagenes = s.createQuery("from ImagenEntity i where i.reclamo = ?").setInteger(0, idReclamo).list();
 			for(ImagenEntity i : imagenes)
 				resultado.add(toNegocio(i));

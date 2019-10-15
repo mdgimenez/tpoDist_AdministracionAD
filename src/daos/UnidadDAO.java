@@ -6,14 +6,11 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import entities.DuenioEntity;
-import entities.PersonaEntity;
 import entities.UnidadEntity;
 import exceptions.EdificioException;
 import exceptions.UnidadException;
 import hibernate.HibernateUtil;
 import modelo.Edificio;
-import modelo.Persona;
 import modelo.Unidad;
 
 public class UnidadDAO {
@@ -33,6 +30,7 @@ public class UnidadDAO {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session s = sf.getCurrentSession();
 		s.beginTransaction();
+		@SuppressWarnings("unchecked")
 		List<UnidadEntity> unidades = s.createQuery("from UnidadEntity").list();
 		if(unidades != null) {
 			for(UnidadEntity e : unidades)
@@ -86,6 +84,7 @@ public class UnidadDAO {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session s = sf.getCurrentSession();
 		s.beginTransaction();
+		@SuppressWarnings("unchecked")
 		List<UnidadEntity> unidades = (List<UnidadEntity>) s.createQuery("from UnidadEntity ue where ue.edificio.codigo = ?").setInteger(0, edificio.getCodigo()).list();
 		if(unidades != null) {
 			for(UnidadEntity ue : unidades)

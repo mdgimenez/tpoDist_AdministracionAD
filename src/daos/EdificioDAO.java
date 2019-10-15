@@ -7,12 +7,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import entities.EdificioEntity;
-import entities.PersonaEntity;
 import exceptions.EdificioException;
 import exceptions.UnidadException;
 import hibernate.HibernateUtil;
 import modelo.Edificio;
-import modelo.Persona;
 
 public class EdificioDAO {
 
@@ -31,6 +29,7 @@ public class EdificioDAO {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session s = sf.getCurrentSession();
 		s.beginTransaction();
+		@SuppressWarnings("unchecked")
 		List<EdificioEntity> edificios = s.createQuery("from EdificioEntity").list();
 		for(EdificioEntity e : edificios)
 			resultado.add(toNegocio(e));

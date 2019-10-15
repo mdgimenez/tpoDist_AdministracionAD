@@ -11,6 +11,7 @@ public class ReclamoView {
 	private int codigoEdificio; 
 	private String piso;
 	private String ubicacion; 
+	private String titulo;
 	private String descripcion;
 	private List<Imagen> imagenes;
 	private int idUnidad;
@@ -19,24 +20,26 @@ public class ReclamoView {
 	
 	public ReclamoView() { }
 
-	public ReclamoView(int id, String documentoPersona, int codigoEdificio, String piso, String ubicacion, String descripcion, int idUnidad, String estado, List<Imagen> imagenes) {
+	public ReclamoView(int id, String documentoPersona, int codigoEdificio, String piso, String ubicacion, String titulo, String descripcion, int idUnidad, String estado, List<Imagen> imagenes) {
 		this.id = id;
 		this.documentoPersona = documentoPersona;
 		this.codigoEdificio = codigoEdificio;
 		this.piso = piso;
 		this.ubicacion = ubicacion;
+		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.imagenes = imagenes;
 		this.estado = estado;
 		this.idUnidad = idUnidad;
 	}
 	
-	public ReclamoView(int id, String documentoPersona, int codigoEdificio, String piso, String ubicacion, String descripcion, int idUnidad, String estado, List<Imagen> imagenes, String fecha) {
+	public ReclamoView(int id, String documentoPersona, int codigoEdificio, String piso, String ubicacion, String titulo, String descripcion, int idUnidad, String estado, List<Imagen> imagenes, String fecha) {
 		this.id = id;
 		this.documentoPersona = documentoPersona;
 		this.codigoEdificio = codigoEdificio;
 		this.piso = piso;
 		this.ubicacion = ubicacion;
+		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.imagenes = imagenes;
 		this.estado = estado;
@@ -82,5 +85,9 @@ public class ReclamoView {
 
 	public String getFecha() {
 		return fecha;
+	}
+	
+	public String getTitulo() {
+		return titulo;
 	}
 }

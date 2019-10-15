@@ -191,7 +191,7 @@ public class Controlador {
 			Unidad unidad = null;
 			if(rw.getIdUnidad() > 0)
 				unidad = UnidadDAO.getInstancia().findById(rw.getIdUnidad());
-			Reclamo reclamo = new Reclamo(ReclamoDAO.getInstancia().obtenerUltimoId()+1, persona, edificio, rw.getPiso(), rw.getUbicacion(), rw.getDescripcion(), unidad);
+			Reclamo reclamo = new Reclamo(ReclamoDAO.getInstancia().obtenerUltimoId()+1, persona, edificio, rw.getPiso(), rw.getUbicacion(), rw.getTitulo(), rw.getDescripcion(), unidad);
 			ReclamoEntity re = ReclamoDAO.getInstancia().saveReclamo(reclamo);
 			if(rw.getImagenes() != null)
 				ImagenDAO.getInstancia().saveImagen(re, rw.getImagenes());
