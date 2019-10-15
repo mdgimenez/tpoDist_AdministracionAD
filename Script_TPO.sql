@@ -4334,6 +4334,7 @@ create table reclamos(
 	documento varchar(20) not null,
 	codigo int not null,
 	ubicacion varchar(300),
+	titulo varchar(100) not null,
 	descripcion varchar(1000),
 	piso varchar(50),
 	estado varchar(50),	
