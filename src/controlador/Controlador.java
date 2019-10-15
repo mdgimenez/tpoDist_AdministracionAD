@@ -255,12 +255,13 @@ public class Controlador {
 	}
 	
 	/** OK */
-	public List<ReclamoView> buscarReclamosAsociados(String documento) throws ReclamoException, ImagenException, PersonaException{
+	public List<ReclamoView> buscarReclamosAsociados(int id) throws UsuarioException, ReclamoException, ImagenException, PersonaException{
+		Usuario u = UsuarioDAO.getInstancia().getUsuarioByID(id);
 		List<ReclamoView> resultado = new ArrayList<ReclamoView>();
 		List<Reclamo> reclamos = new ArrayList<Reclamo>();
 		List<Edificio> edificios = new ArrayList<Edificio>();
-		edificios.addAll(DuenioDAO.getInstancia().getEdificiosAsociadosByDocumento(documento));
-		edificios.addAll(InquilinoDAO.getInstancia().getEdificiosAsociadosByDocumento(documento));
+		edificios.addAll(DuenioDAO.getInstancia().getEdificiosAsociadosByDocumento(u.getPersona().getDocumento()));
+		edificios.addAll(InquilinoDAO.getInstancia().getEdificiosAsociadosByDocumento(u.getPersona().getDocumento()));
 		Set<Integer> aux = new HashSet<Integer>();
 		for(Edificio e: edificios)
 		{
