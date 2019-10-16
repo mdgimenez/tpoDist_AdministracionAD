@@ -288,4 +288,26 @@ public class Controlador {
 		}
 		return resultado;
 	}
+	
+	/** OK */
+	public List<EdificioView> buscarEdificiosAsociados(int id) throws UsuarioException, EdificioException, PersonaException, UnidadException {
+		Usuario u = UsuarioDAO.getInstancia().getUsuarioByID(id);
+		List<Edificio> edificios = new ArrayList<Edificio>();
+		List<EdificioView> ev = new ArrayList<EdificioView>();
+		edificios.addAll(DuenioDAO.getInstancia().getEdificiosAsociadosByDocumento(u.getPersona().getDocumento()));
+		edificios.addAll(InquilinoDAO.getInstancia().getEdificiosAsociadosByDocumento(u.getPersona().getDocumento()));
+		Set<Integer> aux = new HashSet<Integer>();
+		for(Edificio e: edificios)
+		{
+			aux.add(e.getCodigo());
+		}
+		edificios.clear();
+		for(int i : aux)
+			edificios.add(EdificioDAO.getInstancia().findByID(i));
+		for(Edificio e: edificios)
+		{
+			ev.add(e.toView());
+		}
+		return ev;
+	}
 }

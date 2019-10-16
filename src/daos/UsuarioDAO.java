@@ -83,11 +83,11 @@ public class UsuarioDAO {
 		try {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.getCurrentSession();
+			s.beginTransaction();
 			UsuarioEntity usuario = (UsuarioEntity) s.createQuery("from UsuarioEntity u where u.persona = ? and u.contrasena = ?")
 					.setString(0, documento)
 					.setString(1, contrasena)
 					.uniqueResult();
-			s.beginTransaction();
 			if(usuario != null)
 				return true;
 			else

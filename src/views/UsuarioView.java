@@ -13,6 +13,11 @@ public class UsuarioView {
 		this.documento = documento;
 		this.contrasena = contrasena;
 	}
+	
+	public UsuarioView(String documento, String contrasena) {
+		this.documento = documento;
+		this.contrasena = contrasena;
+	}
 
 	public int getId() {
 		return id;
