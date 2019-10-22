@@ -264,17 +264,11 @@ public class Controlador {
 		edificios.addAll(InquilinoDAO.getInstancia().getEdificiosAsociadosByDocumento(u.getPersona().getDocumento()));
 		Set<Integer> aux = new HashSet<Integer>();
 		for(Edificio e: edificios)
-		{
 			aux.add(e.getCodigo());
-		}
 		for(int i: aux)
-		{
 			reclamos.addAll(ReclamoDAO.getInstancia().getReclamosByEdificio(i));
-		}
 		for(Reclamo reclamo: reclamos)
-		{
 			resultado.add(reclamo.toView());
-		}
 		return resultado;
 	}
 
@@ -283,9 +277,7 @@ public class Controlador {
 		List<ReclamoView> resultado = new ArrayList<ReclamoView>();
 		List<Reclamo> reclamos = ReclamoDAO.getInstancia().getAll();
 		for(Reclamo reclamo: reclamos)
-		{
 			resultado.add(reclamo.toView());
-		}
 		return resultado;
 	}
 	
@@ -298,16 +290,50 @@ public class Controlador {
 		edificios.addAll(InquilinoDAO.getInstancia().getEdificiosAsociadosByDocumento(u.getPersona().getDocumento()));
 		Set<Integer> aux = new HashSet<Integer>();
 		for(Edificio e: edificios)
-		{
 			aux.add(e.getCodigo());
-		}
 		edificios.clear();
 		for(int i : aux)
 			edificios.add(EdificioDAO.getInstancia().findByID(i));
 		for(Edificio e: edificios)
-		{
 			ev.add(e.toView());
-		}
 		return ev;
+	}
+
+	public ArrayList<String> traerPisos(int codigoEdificio) throws EdificioException, UnidadException
+	{
+		List<Unidad> listaUnidades = UnidadDAO.getInstancia().getUnidadesByEdificio(EdificioDAO.getInstancia().findByID(codigoEdificio));
+		Set<String> aux = new HashSet<String>();
+		ArrayList<String> pisos = new ArrayList<String>();
+		for(Unidad u: listaUnidades)
+			aux.add(u.getPiso());
+		for(int i = 0; i < aux.size(); i++) {
+			pisos.add("{\"piso\":" + String.valueOf(i+1) + "}");
+		}
+		return pisos;
+	}
+	
+	public ArrayList<String> traerUnidades(int id, int codigoEdificio, String piso) throws UsuarioException, PersonaException
+	{
+		Usuario usuario = UsuarioDAO.getInstancia().getUsuarioByID(id);
+		List<Unidad> unidades = new ArrayList<Unidad>();
+		unidades.addAll(DuenioDAO.getInstancia().getUnidadesAsociados(usuario.getPersona().getDocumento()));
+		unidades.addAll(InquilinoDAO.getInstancia().getUnidadesAsociados(usuario.getPersona().getDocumento()));
+
+		HashSet<String> aux = new HashSet<String>();
+
+		for(Unidad u: unidades)
+		{
+			if(u.getEdificio().getCodigo() == codigoEdificio && u.getPiso().compareTo(piso) == 0)
+			{
+				aux.add(u.getNumero());
+			}
+		}
+		ArrayList<String> resultado = new ArrayList<String>();
+
+		for(String numero: aux)
+		{
+			resultado.add("{\"unidad\":" + numero + "}");
+		}
+		return resultado;
 	}
 }

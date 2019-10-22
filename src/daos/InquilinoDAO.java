@@ -11,6 +11,7 @@ import exceptions.PersonaException;
 import hibernate.HibernateUtil;
 import modelo.Edificio;
 import modelo.Persona;
+import modelo.Unidad;
 
 public class InquilinoDAO {
 
@@ -58,6 +59,30 @@ public class InquilinoDAO {
 			if(inquilinos != null) {
 				for(InquilinoEntity ie : inquilinos)
 					resultado.add(EdificioDAO.getInstancia().findByID(ie.getUnidad().getEdificio().getCodigo()));
+				return resultado;
+		}
+		else
+			return resultado;
+		}
+		catch (Exception e) {
+			throw new PersonaException("No se pudo recuperar las edificios con dicho inquilino");
+		}
+	}
+	
+	public List<Unidad> getUnidadesAsociados(String documento) throws PersonaException {
+		List<Unidad> resultado = new ArrayList<Unidad>();
+		try {
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.getCurrentSession();
+			s.beginTransaction();
+			@SuppressWarnings("unchecked")
+			List<InquilinoEntity> inquilinos = (List<InquilinoEntity>) s.createQuery("from InquilinoEntity d where d.persona = ?")
+						.setString(0, documento)
+						.list();
+			s.getTransaction().commit();
+			if(inquilinos != null) {
+				for(InquilinoEntity ie : inquilinos)
+					resultado.add(UnidadDAO.getInstancia().findById(ie.getUnidad().getIdentificador()));
 				return resultado;
 		}
 		else
