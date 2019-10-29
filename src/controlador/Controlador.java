@@ -145,8 +145,7 @@ public class Controlador {
 	}
 	
 	/** TO DO */
-	@SuppressWarnings("unused")
-	private Usuario buscarUsuarioByID(int codigo) throws UsuarioException {
+	public Usuario buscarUsuarioByID(int codigo) throws UsuarioException {
 		try {
 			return UsuarioDAO.getInstancia().getUsuarioByID(codigo);
 		} catch (UsuarioException e) {
@@ -175,7 +174,7 @@ public class Controlador {
 		return -1;
 	}
 	
-	public boolean autenticarUsuario(UsuarioView uw) throws UsuarioException {
+	public int autenticarUsuario(UsuarioView uw) throws UsuarioException {
 		try {
 			return UsuarioDAO.getInstancia().getUsuarioAuth(uw.getDocumento(), uw.getContrasena());
 		} catch (Exception e) {
@@ -185,13 +184,13 @@ public class Controlador {
 	
 	/** OK */
 	public int crearReclamo(ReclamoView rw) throws ReclamoException { 
-		try{
-			Persona	persona = PersonaDAO.getInstancia().findByID(rw.getDocumentoPersona()); 
+		try{ 
+			Usuario usuario = UsuarioDAO.getInstancia().getUsuarioByID(rw.getUserId());
 			Edificio edificio =	EdificioDAO.getInstancia().findByID(rw.getCodigoEdificio());
 			Unidad unidad = null;
 			if(rw.getIdUnidad() > 0)
 				unidad = UnidadDAO.getInstancia().findById(rw.getIdUnidad());
-			Reclamo reclamo = new Reclamo(ReclamoDAO.getInstancia().obtenerUltimoId()+1, persona, edificio, rw.getPiso(), rw.getUbicacion(), rw.getTitulo(), rw.getDescripcion(), unidad);
+			Reclamo reclamo = new Reclamo(ReclamoDAO.getInstancia().obtenerUltimoId()+1, usuario.getPersona(), edificio, rw.getPiso(), rw.getUbicacion(), rw.getTitulo(), rw.getDescripcion(), unidad);
 			ReclamoEntity re = ReclamoDAO.getInstancia().saveReclamo(reclamo);
 			if(rw.getImagenes() != null)
 				ImagenDAO.getInstancia().saveImagen(re, rw.getImagenes());
@@ -299,15 +298,21 @@ public class Controlador {
 		return ev;
 	}
 
-	public ArrayList<String> traerPisos(int codigoEdificio) throws EdificioException, UnidadException
+	public ArrayList<String> traerPisos(int id, int codigoEdificio) throws UsuarioException, PersonaException, EdificioException, UnidadException
 	{
-		List<Unidad> listaUnidades = UnidadDAO.getInstancia().getUnidadesByEdificio(EdificioDAO.getInstancia().findByID(codigoEdificio));
+		Usuario usuario = UsuarioDAO.getInstancia().getUsuarioByID(id);
+		
+		List<Unidad> unidades = new ArrayList<Unidad>();
+		unidades.addAll(DuenioDAO.getInstancia().getUnidadesAsociados(usuario.getPersona().getDocumento()));
+		unidades.addAll(InquilinoDAO.getInstancia().getUnidadesAsociados(usuario.getPersona().getDocumento()));
+		
 		Set<String> aux = new HashSet<String>();
 		ArrayList<String> pisos = new ArrayList<String>();
-		for(Unidad u: listaUnidades)
-			aux.add(u.getPiso());
-		for(int i = 0; i < aux.size(); i++) {
-			pisos.add("{\"piso\":" + String.valueOf(i+1) + "}");
+		for(Unidad u: unidades)
+			if(u.getEdificio().getCodigo() == codigoEdificio)
+				aux.add(u.getPiso());
+		for(String piso : aux) {
+			pisos.add("{\"piso\":" + piso + "}");
 		}
 		return pisos;
 	}
@@ -324,9 +329,7 @@ public class Controlador {
 		for(Unidad u: unidades)
 		{
 			if(u.getEdificio().getCodigo() == codigoEdificio && u.getPiso().compareTo(piso) == 0)
-			{
 				aux.add(u.getNumero());
-			}
 		}
 		ArrayList<String> resultado = new ArrayList<String>();
 

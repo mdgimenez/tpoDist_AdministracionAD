@@ -79,7 +79,7 @@ public class UsuarioDAO {
 		}
 	}
 	
-	public boolean getUsuarioAuth(String documento, String contrasena) throws UsuarioException {
+	public int getUsuarioAuth(String documento, String contrasena) throws UsuarioException {
 		try {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.getCurrentSession();
@@ -89,9 +89,9 @@ public class UsuarioDAO {
 					.setString(1, contrasena)
 					.uniqueResult();
 			if(usuario != null)
-				return true;
+				return usuario.getIdUser();
 			else
-				return false;
+				return -1;
 		} catch (Exception e) {
 			throw new UsuarioException("No se pudo autenticar el Usuario");
 		}

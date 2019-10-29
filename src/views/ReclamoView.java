@@ -7,6 +7,7 @@ import modelo.Imagen;
 public class ReclamoView {
 	
 	private int id;
+	private int userId;
 	private String documentoPersona;
 	private int codigoEdificio; 
 	private String piso;
@@ -46,9 +47,25 @@ public class ReclamoView {
 		this.idUnidad = idUnidad;
 		this.fecha = fecha;
 	}
+	
+	public ReclamoView(int id, int userId, int codigoEdificio, String piso, String ubicacion, String titulo, String descripcion, String estado, int idUnidad) {
+		this.id = id;
+		this.userId = userId;
+		this.codigoEdificio = codigoEdificio;
+		this.piso = piso;
+		this.ubicacion = ubicacion;
+		this.titulo = titulo;
+		this.descripcion = descripcion;
+		this.estado = estado;
+		this.idUnidad = idUnidad;
+	}
 
 	public int getId() {
 		return id;
+	}
+	
+	public int getUserId() {
+		return userId;
 	}
 	
 	public String getDocumentoPersona() {
