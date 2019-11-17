@@ -111,6 +111,15 @@ public class ReclamoDAO {
 		return resultado;
 	}
 	
+	public ReclamoEntity findByIdEntity(int identificador) throws ReclamoException {
+		SessionFactory sf = HibernateUtil.getSessionFactory();
+		Session s = sf.getCurrentSession();
+		s.beginTransaction();
+		ReclamoEntity reclamo = (ReclamoEntity) s.createQuery("from ReclamoEntity r where r.idReclamo = ?").setInteger(0, identificador).uniqueResult();
+		return reclamo;
+	}
+	
+	
 	public List<Reclamo> getReclamosByDocumento(String documento) throws ReclamoException, ImagenException {
 		List<Reclamo> resultado = new ArrayList<Reclamo>();
 		SessionFactory sf = HibernateUtil.getSessionFactory();
@@ -120,7 +129,6 @@ public class ReclamoDAO {
 		List<ReclamoEntity> reclamos = s.createQuery("from ReclamoEntity r where r.persona = ?").setString(0, documento).list();
 		for(ReclamoEntity r : reclamos)
 			resultado.add(toNegocio(r));
-		//s.getTransaction().commit();
 		return resultado;
 	}
 	
@@ -147,9 +155,6 @@ public class ReclamoDAO {
 					unidad = UnidadDAO.getInstancia().findById(r.getUnidad().getEdificio().getCodigo(), r.getUnidad().getPiso(), r.getUnidad().getNumero());
 				Reclamo reclamo = new Reclamo(r.getId(), persona, edificio, r.getPiso(), r.getUbicacion(), r.getTitulo(), r.getDescripcion(), unidad, r.getFecha());
 				reclamo.setEstado(r.getEstado());
-				//List<Imagen> imagenes = ImagenDAO.getInstancia().getImagenes(r.getId());
-				//if(imagenes.size() > 0)
-				//	reclamo.setImagenes(imagenes);
 				return reclamo;
 			}
 			else

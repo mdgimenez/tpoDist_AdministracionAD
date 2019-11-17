@@ -13,6 +13,15 @@ public class Imagen {
 		this.tipo = tipo;
 		this.idReclamo = idReclamo;
 	}
+	
+	public Imagen(int numero, String binary, String tipo, int idReclamo) {
+		this.numero = numero;
+		this.binary = binary.getBytes();
+		this.tipo = tipo;
+		this.idReclamo = idReclamo;
+	}
+	
+	public Imagen() {}
 
 	public int getNumero() {
 		return numero;

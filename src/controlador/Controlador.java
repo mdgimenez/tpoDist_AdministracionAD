@@ -21,6 +21,7 @@ import exceptions.ReclamoException;
 import exceptions.UnidadException;
 import exceptions.UsuarioException;
 import modelo.Edificio;
+import modelo.Imagen;
 import modelo.Persona;
 import modelo.Reclamo;
 import modelo.Unidad;
@@ -191,13 +192,16 @@ public class Controlador {
 			if(rw.getIdUnidad() > 0)
 				unidad = UnidadDAO.getInstancia().findById(rw.getIdUnidad());
 			Reclamo reclamo = new Reclamo(ReclamoDAO.getInstancia().obtenerUltimoId()+1, usuario.getPersona(), edificio, rw.getPiso(), rw.getUbicacion(), rw.getTitulo(), rw.getDescripcion(), unidad);
-			ReclamoEntity re = ReclamoDAO.getInstancia().saveReclamo(reclamo);
-			if(rw.getImagenes() != null)
-				ImagenDAO.getInstancia().saveImagen(re, rw.getImagenes());
+			ReclamoDAO.getInstancia().saveReclamo(reclamo);
 			return reclamo.getId();
 		} catch(Exception e) {
 			throw new ReclamoException("No se pudo guardar el reclamo");
 		}
+	}
+	
+	public void guardarImagen(Imagen i) throws ImagenException, ReclamoException {
+		ReclamoEntity re = ReclamoDAO.getInstancia().findByIdEntity(i.getIdReclamo());
+		ImagenDAO.getInstancia().saveImagen(re, i);
 	}
 					 
 	/** OK */
@@ -312,7 +316,7 @@ public class Controlador {
 			if(u.getEdificio().getCodigo() == codigoEdificio)
 				aux.add(u.getPiso());
 		for(String piso : aux) {
-			pisos.add("{\"piso\":" + piso + "}");
+			pisos.add("{\"piso\":" + "\""+ piso + "\"" + "}");
 		}
 		return pisos;
 	}
@@ -335,7 +339,7 @@ public class Controlador {
 
 		for(String numero: aux)
 		{
-			resultado.add("{\"unidad\":" + numero + "}");
+			resultado.add("{\"unidad\":" +  "\""+ numero + "\"" + "}");
 		}
 		return resultado;
 	}

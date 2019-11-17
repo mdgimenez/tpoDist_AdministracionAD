@@ -63,17 +63,13 @@ public class ImagenDAO {
 			throw new ImagenException("No se pudo recuperar las imagenes");
 	}
 
-	public void saveImagen(ReclamoEntity reclamo, List<Imagen> imagenes) throws ImagenException {
+	public void saveImagen(ReclamoEntity reclamo, Imagen i) throws ImagenException {
 		try {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.getCurrentSession();
 			s.beginTransaction();
-			ImagenEntity imagen = new ImagenEntity();
-			for(Imagen i : imagenes) {
-				imagen = new ImagenEntity(i.getBinary(), i.getTipo(), reclamo);
-				s.beginTransaction();
-				s.save(imagen);
-			}
+			ImagenEntity ie = new ImagenEntity(i.getBinary(), i.getTipo(), reclamo);
+			s.save(ie);
 			s.getTransaction().commit();
 		} catch (Exception e) {
 			throw new ImagenException("No se pudo guardar las imagenes");

@@ -1,5 +1,6 @@
 package views;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import modelo.Imagen;
@@ -58,6 +59,22 @@ public class ReclamoView {
 		this.descripcion = descripcion;
 		this.estado = estado;
 		this.idUnidad = idUnidad;
+	}
+	
+	public ReclamoView(int id, int userId, int codigoEdificio, String piso, String ubicacion, String titulo, String descripcion, String estado, int idUnidad, List<Imagen> imagenes) {
+		this.id = id;
+		this.userId = userId;
+		this.codigoEdificio = codigoEdificio;
+		this.piso = piso;
+		this.ubicacion = ubicacion;
+		this.titulo = titulo;
+		this.descripcion = descripcion;
+		this.estado = estado;
+		this.idUnidad = idUnidad;
+		this.imagenes = new ArrayList<Imagen>();
+		for(Imagen i : imagenes) {
+			this.imagenes.add(i);
+		}
 	}
 
 	public int getId() {
