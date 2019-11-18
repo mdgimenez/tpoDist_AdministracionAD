@@ -1,6 +1,7 @@
 package controlador;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -145,7 +146,7 @@ public class Controlador {
 		return PersonaDAO.getInstancia().findByID(documento);
 	}
 	
-	/** TO DO */
+	/** OK */
 	public Usuario buscarUsuarioByID(int codigo) throws UsuarioException {
 		try {
 			return UsuarioDAO.getInstancia().getUsuarioByID(codigo);
@@ -154,7 +155,7 @@ public class Controlador {
 		}
 	}
 	
-	/** TO DO */
+	/** OK */
 	public int registrarUsuario(UsuarioView uw) throws UsuarioException {
 		try {
 			Usuario usuario = UsuarioDAO.getInstancia().getUsuarioByDocumento(uw.getDocumento());
@@ -199,6 +200,7 @@ public class Controlador {
 		}
 	}
 	
+	/** OK */
 	public void guardarImagen(Imagen i) throws ImagenException, ReclamoException {
 		ReclamoEntity re = ReclamoDAO.getInstancia().findByIdEntity(i.getIdReclamo());
 		ImagenDAO.getInstancia().saveImagen(re, i);
@@ -272,15 +274,7 @@ public class Controlador {
 			reclamos.addAll(ReclamoDAO.getInstancia().getReclamosByEdificio(i));
 		for(Reclamo reclamo: reclamos)
 			resultado.add(reclamo.toView());
-		return resultado;
-	}
-
-	/** OK */
-	public List<ReclamoView> buscarTodosLosReclamos() throws ReclamoException, ImagenException {
-		List<ReclamoView> resultado = new ArrayList<ReclamoView>();
-		List<Reclamo> reclamos = ReclamoDAO.getInstancia().getAll();
-		for(Reclamo reclamo: reclamos)
-			resultado.add(reclamo.toView());
+		Collections.sort(resultado);
 		return resultado;
 	}
 	
@@ -301,7 +295,8 @@ public class Controlador {
 			ev.add(e.toView());
 		return ev;
 	}
-
+	
+	/** OK */
 	public ArrayList<String> traerPisos(int id, int codigoEdificio) throws UsuarioException, PersonaException, EdificioException, UnidadException
 	{
 		Usuario usuario = UsuarioDAO.getInstancia().getUsuarioByID(id);
@@ -321,6 +316,7 @@ public class Controlador {
 		return pisos;
 	}
 	
+	/** OK */
 	public ArrayList<String> traerUnidades(int id, int codigoEdificio, String piso) throws UsuarioException, PersonaException
 	{
 		Usuario usuario = UsuarioDAO.getInstancia().getUsuarioByID(id);

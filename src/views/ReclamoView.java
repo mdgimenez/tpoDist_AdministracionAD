@@ -5,7 +5,7 @@ import java.util.List;
 
 import modelo.Imagen;
 
-public class ReclamoView {
+public class ReclamoView implements Comparable<ReclamoView>{
 	
 	private int id;
 	private int userId;
@@ -123,5 +123,10 @@ public class ReclamoView {
 	
 	public String getTitulo() {
 		return titulo;
+	}
+	
+	@Override
+	public int compareTo(ReclamoView rv) {
+		return this.id - rv.getId();
 	}
 }
